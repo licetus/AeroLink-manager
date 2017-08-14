@@ -1,42 +1,97 @@
 <template>
-	<div class="panel-side">
-		<Menu class="side-menu" active-name="/dashboard">
-			<template v-for="(item, index) in $router.options.routes" v-if="!item.hidden">
-				<Submenu :name="index+''" v-if="!item.leaf">
-					<template slot="title">
+	<div class="panel">
+		<div class="panel-side">
+			<Menu theme="dark" class="side-menu" active-name="/dashboard" router>
+				<template v-for="(item, index) in $router.options.routes" v-if="!item.hidden">
+					<Submenu :name="index+''" v-if="!item.leaf">
+						<template slot="title">
+							<Icon :type="item.iconType"></Icon>
+							{{ item.title }}
+						</template>
+						<Menu-item v-for="child in item.children" :key="item.id" :name="child.path">
+							<Icon :type="child.iconType"></Icon>
+							{{ child.title }}
+						</Menu-item>
+					</Submenu>
+					<Menu-item v-if="item.leaf && item.children.length > 0" :name="item.children[0].path">
 						<Icon :type="item.iconType"></Icon>
-						{{ item.title }}
-					</template>
-					<Menu-item v-for="child in item.children" :key="item.id" :name="child.path">
-						<Icon :type="child.iconType"></Icon>
-						{{ child.title }}
+						{{ item.children[0].title }}
 					</Menu-item>
-				</Submenu>
-				<Menu-item v-if="item.leaf && item.children.length > 0" :name="item.children[0].path">
-					<Icon :type="item.iconType"></Icon>
-					{{ item.children[0].title }}
-				</Menu-item>
-			</template>
-		</Menu>
+				</template>
+			</Menu>
+		</div>
+		<div class="panel-body">
+			<div class="breadcrumb">
+				<BreadCrumb>
+					<Breadcrumb-item :to="{ path: '/dashboard'}">Index</Breadcrumb-item>
+					<Breadcrumb-item v-if="currentPathNameParent!=''">{{currentPathNameParent}}</Breadcrumb-item>
+					<Breadcrumb-item v-if="currentPathName!=''">{{currentPathName}}</Breadcrumb-item>
+				</Breadcrumb>
+				<router-view></router-view>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
-export default {
-	data() {
-		return {
-			currentPathName: 'Dashboard',
-			currentPathNameParent: '',
-		}
-	},
-	watch: {
-		'$route' (to, from) {
-			this.currentPathName = to.name
-			this.currentPathNameParent = to.matched[0].name
+	export default {
+		data() {
+			return {
+				currentPathName: '',
+				currentPathNameParent: '',
+			}
 		},
-	},
-}
+		watch: {
+			'$route' (to) {
+				this.currentPathName = to.name
+				this.currentPathNameParent = to.matched[0].name
+			},
+		},
+	}
 </script>
 
 <style>
+	.panel {
+		position: absolute;
+		top: 0px;
+		bottom: 0px;
+		left: 0px;
+		width: 100%;
+	}
+	.panel-side {
+		position: absolute;
+		top: 0px;
+		bottom: 0px;
+		left: 0px;
+		width: 200px;
+		overflow: hidden;
+		background-color: #41485d;
+	}
+	.panel-body {
+		position:absolute;
+		top: 0px;
+		left: 200px;
+		right: 0px;
+		bottom: 0px;
+		padding: 20px;
+		min-width: 600px;
+		overflow-y: auto;
+		background-color: #e9edf1;
+	}
+	.title {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		height: 50px;
+		width: 200px;
+		color: #c0ccda;
+		background-color: #292f32;
+	}
+	.text {
+		position: absolute;
+		top: 0px;
+		left: 20px;
+		font-size: 14px;
+		vertical-align: middle;
+	}
 </style>
