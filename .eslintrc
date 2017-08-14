@@ -18,5 +18,5 @@
     "global-require": 0,
     "indent": ["error", "tab"],
     "no-tabs": "off"
-  }
+  },
 }
