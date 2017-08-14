@@ -10,14 +10,15 @@
 
 			}
 		},
-		mounted() {
 
+		mounted() {
 		},
+
 		beforeDestroy() {
 
 		},
 		methods: {
 
-		}
+		},
 	}
 </script>
