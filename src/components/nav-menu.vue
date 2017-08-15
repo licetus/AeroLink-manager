@@ -6,16 +6,16 @@
 					<Submenu :name="index+''" v-if="!item.leaf">
 						<template slot="title">
 							<Icon :type="item.iconType"></Icon>
-							{{ item.name }}
+							{{ $t(item.name) }}
 						</template>
 						<Menu-item v-for="child in item.children" :key="item.id" :name="child.path">
 							<Icon :type="child.iconType"></Icon>
-							{{ child.name }}
+							{{ $t(child.name) }}
 						</Menu-item>
 					</Submenu>
 					<Menu-item v-if="item.leaf && item.children.length > 0" :name="item.children[0].path">
 						<Icon :type="item.iconType"></Icon>
-						{{ item.children[0].name }}
+						{{ $t(item.children[0].name) }}
 					</Menu-item>
 				</template>
 			</Menu>
@@ -23,9 +23,9 @@
 		<div class="panel-body">
 			<div class="breadcrumb">
 				<Breadcrumb>
-					<Breadcrumb-item href="/dashboard">Home</Breadcrumb-item>
-					<Breadcrumb-item v-if="currentPathNameParent!==''">{{currentPathNameParent}}</Breadcrumb-item>
-					<Breadcrumb-item v-if="currentPathName!==''">{{currentPathName}}</Breadcrumb-item>
+					<Breadcrumb-item href="/dashboard">{{$t('Home')}}</Breadcrumb-item>
+					<Breadcrumb-item v-if="currentPathNameParent!==''">{{$t(currentPathNameParent)}}</Breadcrumb-item>
+					<Breadcrumb-item v-if="currentPathName!==''">{{$t(currentPathName)}}</Breadcrumb-item>
 				</Breadcrumb>
 				<router-view></router-view>
 			</div>

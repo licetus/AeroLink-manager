@@ -11,16 +11,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/licetus/AeroLink-manager"
+    "url": "https://github.com/licetus/AeroLink-manager.git"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.15.3",
     "echarts": "^3.4.0",
-    "i18n": "^0.8.3",
     "iview": "^2.0.0-rc.13",
     "vue": "^2.2.6",
+    "vue-i18n": "^7.1.1",
     "vue-router": "^2.3.1",
     "vuex": "^2.2.1"
   },
