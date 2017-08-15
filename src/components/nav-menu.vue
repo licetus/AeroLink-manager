@@ -1,34 +1,49 @@
 <template>
-	<div class="panel">
-		<div class="panel-side">
-			<Menu theme="dark" class="side-menu" active-name="/dashboard" @on-select="route">
-				<template v-for="(item, index) in $router.options.routes" v-if="!item.hidden">
-					<Submenu :name="index+''" v-if="!item.leaf">
-						<template slot="title">
-							<Icon :type="item.iconType"></Icon>
-							{{ $t(item.name) }}
-						</template>
-						<Menu-item v-for="child in item.children" :key="item.id" :name="child.path">
-							<Icon :type="child.iconType"></Icon>
-							{{ $t(child.name) }}
-						</Menu-item>
-					</Submenu>
-					<Menu-item v-if="item.leaf && item.children.length > 0" :name="item.children[0].path">
-						<Icon :type="item.iconType"></Icon>
-						{{ $t(item.children[0].name) }}
-					</Menu-item>
-				</template>
-			</Menu>
+	<div class="container">
+		<div class="top-bar">
+				<Row type="flex" justify="end">
+					<Col>
+						<Dropdown class="SelectLang" trigger="click" @on-click="onSelectLang">
+							{{$t('SelectLang')}}
+							<Icon type="arrow-down-b"></Icon>
+							<Dropdown-menu slot="list">
+								<Dropdown-item name="en-US">English</Dropdown-item>
+								<Dropdown-item name="zh-CN">简体中文</Dropdown-item>
+								<Dropdown-item name="zh-TW">繁體中文</Dropdown-item>
+							</Dropdown-menu>
+						</Dropdown>
+					</Col>
+				</Row>
 		</div>
-		<div class="panel-body">
-			<div class="breadcrumb">
-				<Breadcrumb>
-					<Breadcrumb-item href="/dashboard">{{$t('Home')}}</Breadcrumb-item>
-					<Breadcrumb-item v-if="currentPathNameParent!==''">{{$t(currentPathNameParent)}}</Breadcrumb-item>
-					<Breadcrumb-item v-if="currentPathName!==''">{{$t(currentPathName)}}</Breadcrumb-item>
-				</Breadcrumb>
-				<router-view></router-view>
+		<div class="side-bar">
+			<div class="side-bar-header">
+				<Row><img class="avatar" src="/src/assets/imgs/avatar.png"/></Row>
+				<Row><span class="username">Mobiusor</span></Row>
+				<Row><span class="company">T.H.E. co.ltd</span></Row>
 			</div>
+			<div class="side-bar-menu">
+				<Menu theme="dark" active-name="/dashboard" @on-select="onRouter">
+					<template v-for="(item, index) in $router.options.routes" v-if="!item.hidden">
+						<Submenu :name="index+''" v-if="!item.leaf">
+							<template slot="title">
+								<Icon :type="item.iconType"></Icon>
+								{{ $t(item.name) }}
+							</template>
+							<Menu-item v-for="child in item.children" :key="item.id" :name="child.path">
+								<Icon :type="child.iconType"></Icon>
+								{{ $t(child.name) }}
+							</Menu-item>
+						</Submenu>
+						<Menu-item v-if="item.leaf && item.children.length > 0" :name="item.children[0].path">
+							<Icon :type="item.iconType"></Icon>
+							{{ $t(item.children[0].name) }}
+						</Menu-item>
+					</template>
+				</Menu>
+			</div>
+		</div>
+		<div class="content">
+				<router-view></router-view>
 		</div>
 	</div>
 </template>
@@ -41,42 +56,63 @@
 				currentPathNameParent: '',
 			}
 		},
-		watch: {
-			$route: 'fetchData',
-		},
 		methods: {
-			route(name) {
-				// console.log(name)
-				this.$router.replace(name)
+			onSelectLang(name) {
+				localStorage.lang = name
+				location.reload()
 			},
-			fetchData(to) {
-				this.currentPathName = to.name
-				this.currentPathNameParent = to.matched[0].name
+
+			onRouter(name) {
+				this.$router.replace(name)
 			},
 		},
 	}
 </script>
 
 <style>
-	.panel {
+	.container {
 		position: absolute;
 		top: 0px;
 		bottom: 0px;
 		left: 0px;
 		width: 100%;
 	}
-	.panel-side {
+	.top-bar {
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		left: 200px;
+		height: 50px;
+		min-width: 500px;
+		background-color: #e9edf1;
+	}
+	.side-bar {
 		position: absolute;
 		top: 0px;
 		bottom: 0px;
 		left: 0px;
 		width: 200px;
+		height: 100%;
 		overflow: hidden;
 		background-color: #41485d;
 	}
-	.panel-body {
+	.avatar {
+		height: 50px;
+		width: 50px;
+		border-radius: 50%;
+		margin: 20px;
+	}
+	.username {
+		color: #eee;
+		margin: 10px 20px;
+	}
+	.company {
+		color: #ccc;
+		margin: 10px 20px 40px 20px;
+	}
+	.content {
 		position:absolute;
-		top: 0px;
+		top: 50px;
 		left: 200px;
 		right: 0px;
 		bottom: 0px;
