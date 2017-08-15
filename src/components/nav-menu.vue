@@ -42,7 +42,7 @@
 			}
 		},
 		watch: {
-			'$route': 'fetchData',
+			$route: 'fetchData',
 		},
 		methods: {
 			route(name) {
@@ -50,7 +50,6 @@
 				this.$router.replace(name)
 			},
 			fetchData(to) {
-				console.log(to)
 				this.currentPathName = to.name
 				this.currentPathNameParent = to.matched[0].name
 			},
