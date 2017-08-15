@@ -22,7 +22,7 @@ const router = new VueRouter(RouterConfig)
 
 router.beforeEach((to, from, next) => {
 	iView.LoadingBar.start()
-	Util.title(to.title)
+	Util.title(to.name)
 	next()
 })
 

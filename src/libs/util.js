@@ -5,7 +5,7 @@ let util = {
 
 }
 util.title = function(title) {
-		title = title ? title + ' - Home' : 'iView project'
+		title = title ? title + ' - Manager' : 'Aerolink'
 		window.document.title = title
 };
 

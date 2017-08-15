@@ -1,31 +1,31 @@
 <template>
 	<div class="panel">
 		<div class="panel-side">
-			<Menu theme="dark" class="side-menu" active-name="/dashboard" router>
+			<Menu theme="dark" class="side-menu" active-name="/dashboard" @on-select="route">
 				<template v-for="(item, index) in $router.options.routes" v-if="!item.hidden">
 					<Submenu :name="index+''" v-if="!item.leaf">
 						<template slot="title">
 							<Icon :type="item.iconType"></Icon>
-							{{ item.title }}
+							{{ item.name }}
 						</template>
 						<Menu-item v-for="child in item.children" :key="item.id" :name="child.path">
 							<Icon :type="child.iconType"></Icon>
-							{{ child.title }}
+							{{ child.name }}
 						</Menu-item>
 					</Submenu>
 					<Menu-item v-if="item.leaf && item.children.length > 0" :name="item.children[0].path">
 						<Icon :type="item.iconType"></Icon>
-						{{ item.children[0].title }}
+						{{ item.children[0].name }}
 					</Menu-item>
 				</template>
 			</Menu>
 		</div>
 		<div class="panel-body">
 			<div class="breadcrumb">
-				<BreadCrumb>
-					<Breadcrumb-item :to="{ path: '/dashboard'}">Index</Breadcrumb-item>
-					<Breadcrumb-item v-if="currentPathNameParent!=''">{{currentPathNameParent}}</Breadcrumb-item>
-					<Breadcrumb-item v-if="currentPathName!=''">{{currentPathName}}</Breadcrumb-item>
+				<Breadcrumb>
+					<Breadcrumb-item href="/dashboard">Home</Breadcrumb-item>
+					<Breadcrumb-item v-if="currentPathNameParent!==''">{{currentPathNameParent}}</Breadcrumb-item>
+					<Breadcrumb-item v-if="currentPathName!==''">{{currentPathName}}</Breadcrumb-item>
 				</Breadcrumb>
 				<router-view></router-view>
 			</div>
@@ -42,7 +42,15 @@
 			}
 		},
 		watch: {
-			'$route' (to) {
+			'$route': 'fetchData',
+		},
+		methods: {
+			route(name) {
+				// console.log(name)
+				this.$router.replace(name)
+			},
+			fetchData(to) {
+				console.log(to)
 				this.currentPathName = to.name
 				this.currentPathNameParent = to.matched[0].name
 			},
