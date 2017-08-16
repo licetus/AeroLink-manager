@@ -2,6 +2,7 @@ import Vue from 'vue'
 import iView from 'iview'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
+import fullCalendar from 'vue-fullcalendar'
 import 'iview/dist/styles/iview.css'
 import VueI18n from 'vue-i18n'
 import Routers from './router'
@@ -14,6 +15,8 @@ Vue.use(Vuex)
 
 Vue.use(iView)
 Vue.use(VueI18n)
+
+Vue.component('full-calendar', fullCalendar)
 
 // i18n配置
 const i18n = new VueI18n({
@@ -65,5 +68,8 @@ new Vue({
 	i18n,
 	router,
 	store,
+	components: {
+		App,
+	},
 	render: h => h(App),
 })

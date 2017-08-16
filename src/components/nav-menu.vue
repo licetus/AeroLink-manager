@@ -133,15 +133,6 @@
 		overflow-y: auto;
 		background-color: #e9edf1;
 	}
-	.title {
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		height: 50px;
-		width: 200px;
-		color: #c0ccda;
-		background-color: #292f32;
-	}
 	.text {
 		position: absolute;
 		top: 0px;
